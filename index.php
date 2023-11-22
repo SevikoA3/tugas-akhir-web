@@ -55,7 +55,10 @@ include 'db.php';
                         <p class="card-text m-0">Price per night:</p>
                         <p class="card-text">Rp<?= number_format($data['price'], 2, ',', '.') ?></p>
                     </div>
-                    <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-primary">Details</a>
+                    <div class="d-flex justify-content-between">
+                        <a href="process.php?bookingHotelID=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Book</a>
+                        <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-secondary" style="width: 100px;">Details</a>
+                    </div>
                 </div>
                 </div>
             <?php  
