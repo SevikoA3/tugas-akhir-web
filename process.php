@@ -12,12 +12,20 @@ if (isset($_POST['addHotel'])) {
     $hotelImageTmpName = $hotelImage['tmp_name'];
     $hotelImageSize = $hotelImage['size'];
 
-    $hotelRoom[] = $_FILES['hotelRooms'];
+    $hotelRooms = $_FILES['hotelRooms']['name'];
 
-    $id = mysqli_query($connect, "SELECT count(id) FRO");
+    $query = "INSERT INTO hotels(name, address, image, price, description) VALUES ('$hotelName', '$hotelAddress', '$hotelImageName', '$hotelPrice', '$hotelDesc')";
+    $result = mysqli_query($connect, $query);
 
-    foreach ($hotelRoom as $room) {
-        # code...
+    $id = mysqli_fetch_assoc(mysqli_query($connect,"SELECT id FROM hotels WHERE name = '$hotelName'"));
+    foreach ($hotelRooms as $room) {
+        $query2 = "INSERT INTO rooms(hotelID, image) VALUES ('". $id['id']. "', '". $room. "')";
+        $result2 = mysqli_query($connect, $query2);
+    }
+    if (move_uploaded_file($hotelImageTmpName, "images/$hotelImageName")) {
+        header("Location: index.php?message=". $hotelName. " has been added successfully");
+    } else {
+        header("location: index.php?message=". $hotelName. " has not been added successfully");
     }
 }
 ?>

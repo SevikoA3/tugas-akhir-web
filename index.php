@@ -24,6 +24,38 @@ include 'db.php';
         </div>
     </div>
     </nav>
+
+    <div class="container">
+        <div class="row mt-5">
+            <center>
+                <h1>Hotel List</h1>
+            </center>
+        </div>
+        <div class="row row-cols-auto d-flex justify-content-center mt-5">
+            <?php  
+            $query = "SELECT * FROM hotels";
+            $result = mysqli_query($connect, $query);
+
+            if (mysqli_num_rows($result) > 0) {
+                while($data = mysqli_fetch_assoc($result)) {
+            ?>
+                <div class="card" style="width: 18rem; height: 22rem; padding: 0;">
+                <img src="images/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-overflow: ellipsis"><?= $data['name'] ?></h5>
+                    <p class="card-text" style="text-overflow: ellipsis"><?= $data['description'] ?></p>
+                    <a href="#" class="btn btn-primary">Details</a>
+                </div>
+                </div>
+            <?php  
+                }
+            } else {
+            ?>
+                <center><h2>No data.</h2></center>
+            <?php  
+            }?>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

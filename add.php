@@ -32,7 +32,7 @@ include 'db.php';
         </div>
         <div class="row my-5 mx-3 d-flex justify-content-center">
             <div class="p-3 mx-3 row shadow-lg rounded border" style="max-width: 700px;">
-                <form action="process.php" method="post">
+                <form action="process.php" method="POST" enctype="multipart/form-data">
                 <div class="mb-3 mt-3">
                     <label for="hotelName" class="form-label">Name</label>
                     <input type="text" class="form-control" id="hotelName" name="hotelName" maxlength="50" placeholder="Input Name Here" required>
@@ -58,7 +58,7 @@ include 'db.php';
                     <textarea class="form-control" id="hotelDesc" name="hotelDesc" rows="3" placeholder="Input Description Here" required></textarea>
                 </div>
                 <div class="mb-3 mt-5 w-100">
-                    <input type="submit" value="addHotel" name="addHotel" class="btn btn-primary w-100">
+                    <input type="submit" value="Add Hotel" name="addHotel" class="btn btn-primary w-100">
                 </div>
             </form>
             </div>
