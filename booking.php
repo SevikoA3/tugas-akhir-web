@@ -15,7 +15,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link" href="index.php">Home</a>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
                 <a class="nav-link" href="add.php">Add</a>
             <?php } ?>
@@ -29,7 +29,10 @@
     </div>
     </nav>
 
-
+    <div class="container">
+        
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
