@@ -1,6 +1,15 @@
 <?php  
 include 'db.php';
 
+if (isset($_GET['detailName'])) {
+    $detailName = $_GET['detailName'];
+    $query = "SELECT id FROM hotels WHERE name = '$detailName'";
+    $hotelID = mysqli_fetch_assoc(mysqli_query($connect, $query))['id'];
+
+    //id hotel untuk details
+    header('Location: details.php?id='. $hotelID);
+}
+
 if (isset($_POST['addHotel'])) {
     $hotelName = $_POST['hotelName'];
     $hotelAddress = $_POST['hotelAddress'];

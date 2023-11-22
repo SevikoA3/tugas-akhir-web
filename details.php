@@ -1,5 +1,15 @@
 <?php  
 include "db.php";
+
+$query = "SELECT * FROM hotels WHERE id = ". $_GET['id'];
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result);
+
+$name = $row['name'];
+$address = $row['address'];
+$image = "images/". $row['image'];
+$price = $row['price'];
+$description = $row['description'];
 ?>
 
 <!DOCTYPE html>

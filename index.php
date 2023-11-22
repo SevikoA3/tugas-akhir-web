@@ -44,7 +44,7 @@ include 'db.php';
                 <div class="card-body">
                     <h5 class="card-title" style="text-overflow: ellipsis"><?= $data['name'] ?></h5>
                     <p class="card-text" style="text-overflow: ellipsis"><?= $data['description'] ?></p>
-                    <a href="#" class="btn btn-primary">Details</a>
+                    <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-primary">Details</a>
                 </div>
                 </div>
             <?php  
