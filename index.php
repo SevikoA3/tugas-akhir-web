@@ -47,11 +47,14 @@ include 'db.php';
             if (mysqli_num_rows($result) > 0) {
                 while($data = mysqli_fetch_assoc($result)) {
             ?>
-                <div class="card" style="width: 18rem; height: 22rem; padding: 0;">
+                <div class="card" style="width: 18rem; height: 24rem; padding: 0;">
                 <img src="images/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
                 <div class="card-body">
-                    <h5 class="card-title" style="text-overflow: ellipsis"><?= $data['name'] ?></h5>
-                    <p class="card-text" style="text-overflow: ellipsis"><?= $data['description'] ?></p>
+                    <div style="text-overflow: ellipsis; overflow: hidden; height: 7rem; white-space: nowrap;">
+                        <h5 class="card-title"><?= $data['name'] ?></h5>
+                        <p class="card-text m-0">Price per night:</p>
+                        <p class="card-text">Rp<?= number_format($data['price'], 2, ',', '.') ?></p>
+                    </div>
                     <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-primary">Details</a>
                 </div>
                 </div>
