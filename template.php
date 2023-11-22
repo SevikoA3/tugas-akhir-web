@@ -21,6 +21,9 @@ include 'db.php';
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "user"){ ?>
+                <a class="nav-link" href="bookingHistory.php">Booking History</a>
+            <?php } ?>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
                 <a class="nav-link" href="add.php">Add</a>
             <?php } ?>

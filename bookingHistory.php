@@ -21,7 +21,10 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link" href="index.php">Home</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "user"){ ?>
+                <a class="nav-link active" aria-current="page" href="bookingHistory.php">Booking History</a>
+            <?php } ?>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
                 <a class="nav-link" href="add.php">Add</a>
             <?php } ?>
@@ -62,12 +65,14 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
                             <?php  
                             while($data = mysqli_fetch_assoc($result)) {
                                 $totalPayment = round((strtotime($data['checkout']) - strtotime($data['checkin'])) / 86400) * $data['price'];
+                                $checkin = date('j F Y', strtotime($data['checkin']));
+                                $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
                                 <tr>
                                     <td><?= $data['name'] ?></td>
                                     <td><?= $data['address'] ?></td>
-                                    <td><?= $data['checkin'] ?></td>
-                                    <td><?= $data['checkout'] ?></td>
+                                    <td><?= $checkin ?></td>
+                                    <td><?= $checkout ?></td>
                                     <td>Rp<?= number_format($data['price'], 2, ',', '.') ?></td>
                                     <td>Rp<?= number_format($totalPayment, 2, ',', '.') ?></td>
                                 </tr>
