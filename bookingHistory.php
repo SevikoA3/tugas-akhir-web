@@ -1,7 +1,7 @@
 <?php  
 session_start();
 include 'db.php';
-$query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE username = '". $_SESSION['username']. "'";
+$query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE username = '". $_SESSION['username']. "'";
 ?>
 
 <!DOCTYPE html>
@@ -43,10 +43,14 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
         <div class="row mt-5">
             <center>
                 <h1>Booking History</h1>
+                <h4>Transfer to 63482736 (BCA) for payment.</h4>
+                <h4>Our admin will check the payment on the next day.</h4>
+                <h4>Contact +62123456789 if you have any problem.</h4>
             </center>
         </div>
         <?php  
-        if (isset($_SESSION['role']) && $_SESSION['role'] == 'user' && $result = mysqli_query($connect, $query)){
+        $result = mysqli_query($connect, $query);
+        if (isset($_SESSION['role']) && $_SESSION['role'] == 'user' && mysqli_num_rows($result) > 0){
         ?>
             <div class="row my-5 mx-3 d-flex justify-content-center">
                 <div class="p-3 mx-3 row shadow-lg rounded border">
@@ -59,6 +63,8 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
                                 <th scope="col">Check Out</th>
                                 <th scope="col">Price per Day</th>
                                 <th scope="col">Total Payment</th>
+                                <th scope="col">Paid</th>
+                                <th scope="col">Cancelation</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,11 +76,13 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
                             ?>
                                 <tr>
                                     <td><?= $data['name'] ?></td>
-                                    <td><?= $data['address'] ?></td>
+                                    <td style="max-width: 10rem"><?= $data['address'] ?></td>
                                     <td><?= $checkin ?></td>
                                     <td><?= $checkout ?></td>
                                     <td>Rp<?= number_format($data['price'], 2, ',', '.') ?></td>
                                     <td>Rp<?= number_format($totalPayment, 2, ',', '.') ?></td>
+                                    <td><?= $data['paid'] ? "Yes" : "No" ?></td>
+                                    <td><a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a></td>
                                 </tr>
                             <?php  
                             }
@@ -87,7 +95,7 @@ $query = "SELECT * FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.
         } else {
         ?>
             <center>
-                <h3>You haven't booked any hotel yet.</h3>
+                <h3 class="mt-5">You haven't booked any hotel yet.</h3>
             </center>
         <?php  
         }

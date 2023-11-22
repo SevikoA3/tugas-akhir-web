@@ -1,10 +1,19 @@
 <?php  
 include 'db.php';
 
-if ($_GET['action'] == 'logout') {
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     session_start();
     session_destroy();
     header("Location: index.php");
+}
+else if (isset($_GET['action']) && $_GET['action'] == 'cancelBooking') {
+    $id = $_GET['id'];
+    $query = "DELETE FROM bookings WHERE id = '$id'";
+    if ($result = mysqli_query($connect, $query)){;
+        header("Location: bookingHistory.php?message=Booking cancelled");
+    } else {
+        header("Location: bookingHistory.php?message=Booking cancellation failed");
+    }
 }
 else if (isset($_GET['detailName'])) {
     $detailName = $_GET['detailName'];
@@ -40,6 +49,42 @@ if (isset($_POST['addHotel'])) {
         header("Location: index.php?message=". $hotelName. " has been added successfully");
     } else {
         header("location: index.php?message=". $hotelName. " has not been added successfully");
+    }
+}
+else if (isset($_POST['editHotel'])) {
+    $hotelID = $_POST['hotelID'];
+    $hotelName = $_POST['hotelName'];
+    $hotelAddress = $_POST['hotelAddress'];
+    $hotelPrice = $_POST['hotelPrice'];
+    $hotelDesc = $_POST['hotelDesc'];
+
+    $query = "UPDATE hotels SET name = '$hotelName', address = '$hotelAddress', price = '$hotelPrice', description = '$hotelDesc' WHERE id = '$hotelID'";
+    $result = mysqli_query($connect, $query);
+
+    if (isset($_FILES['hotelImage'])) {
+        $hotelImage = $_FILES['hotelImage'];
+        $hotelImageName = $hotelImage['name'];
+        $hotelImageTmpName = $hotelImage['tmp_name'];
+
+        if (move_uploaded_file($hotelImageTmpName, "images/$hotelImageName")) {
+            $query = "UPDATE hotels SET image = '$hotelImageName' WHERE id = '$hotelID'";
+            $result = mysqli_query($connect, $query);
+        }
+    }
+
+    if (isset($_FILES['hotelRooms'])) {
+        $hotelRooms = $_FILES['hotelRooms']['name'];
+
+        foreach ($hotelRooms as $room) {
+            $query2 = "INSERT INTO rooms(hotelID, image) VALUES ('$hotelID', '$room')";
+            $result2 = mysqli_query($connect, $query2);
+        }
+    }
+
+    if ($result) {
+        header("Location: index.php?message=". $hotelName. " has been updated successfully");
+    } else {
+        header("location: index.php?message=". $hotelName. " has not been updated successfully");
     }
 }
 else if (isset($_POST["login"])){
@@ -85,7 +130,7 @@ else if (isset($_POST['book'])){
         header("Location: booking.php?id=". $_POST['id']. "&message=Checkin date must be before checkout date");
     }
     else {
-        $query = "INSERT INTO bookings(username, hotelID, checkin, checkout, bookingDate) VALUES ('". $_SESSION['username']. "', '". $_POST['id']. "', '". $_POST['checkin']. "', '". $_POST['checkout']. "', '". date('Y-m-d')."')";
+        $query = "INSERT INTO bookings(username, hotelID, checkin, checkout, bookingDate, paid) VALUES ('". $_SESSION['username']. "', '". $_POST['id']. "', '". $_POST['checkin']. "', '". $_POST['checkout']. "', '". date('Y-m-d')."', 0)";
         if ($result = mysqli_query($connect, $query)) {
             header("Location: index.php?message=Booking successful, check you booking history for more details.");
         } else {

@@ -42,6 +42,9 @@ include 'db.php';
                 <h1>Hotel List</h1>
             </center>
         </div>
+        <div class="row">
+            
+        </div>
         <div class="row row-cols-auto d-flex justify-content-center mt-5">
             <?php  
             $query = "SELECT * FROM hotels";
@@ -59,7 +62,17 @@ include 'db.php';
                         <p class="card-text">Rp<?= number_format($data['price'], 2, ',', '.') ?></p>
                     </div>
                     <div class="d-flex justify-content-between">
+                        <?php  
+                        if (isset($_SESSION['role']) && $_SESSION['role'] == 'user') {
+                        ?>
                         <a href="booking.php?id=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Book</a>
+                        <?php  
+                        } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                        ?>
+                        <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Edit</a>
+                        <?php  
+                        }
+                        ?>
                         <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-secondary" style="width: 100px;">Details</a>
                     </div>
                 </div>
