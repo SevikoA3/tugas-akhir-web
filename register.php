@@ -1,18 +1,3 @@
-<?php
-session_start();
-include "db.php";
-
-$query = "SELECT * FROM hotels WHERE id = ". $_GET['id'];
-$result = mysqli_query($connect, $query);
-$row = mysqli_fetch_array($result);
-
-$name = $row['name'];
-$address = $row['address'];
-$image = "images/". $row['image'];
-$price = $row['price'];
-$description = $row['description'];
-?>
-
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
@@ -44,7 +29,39 @@ $description = $row['description'];
     </div>
     </nav>
 
-
+    <div class="container">
+        <div class="row mt-5">
+            <center>
+                <h1>Register</h1>
+            </center>
+        </div>
+        <div class="row my-5 mx-3 d-flex justify-content-center">
+            <div class="p-3 mx-3 row shadow-lg rounded border" style="max-width: 700px;">
+                <form action="process.php" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username Here" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter Password Here" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Enter Password Again Here" required>
+                    </div>
+                    <div class="mb-3 mt-5 w-100">
+                        <button type="submit" name="register" class="btn btn-primary w-100">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row my-2">
+                <center>
+                    <a href="login.php" class="btn"><u>click here if you already have an account.</u></a>
+                </center>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

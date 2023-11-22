@@ -1,4 +1,5 @@
 <?php  
+session_start();
 include 'db.php';
 ?>
 <!DOCTYPE html>
@@ -19,9 +20,16 @@ include 'db.php';
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-            <a class="nav-link" href="add.php">Add</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
+                <a class="nav-link" href="add.php">Add</a>
+            <?php } ?>
         </div>
         </div>
+        <?php if (isset($_SESSION['username'])){ ?>
+            <a class="nav-link" href="process.php?action=logout">Logout</a>
+        <?php } else { ?>
+            <a class="nav-link" href="login.php">Login</a>
+        <?php } ?>
     </div>
     </nav>
 

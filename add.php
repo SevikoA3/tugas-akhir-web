@@ -1,4 +1,5 @@
 <?php  
+session_start();
 include 'db.php';
 ?>
 <!DOCTYPE html>
@@ -19,11 +20,21 @@ include 'db.php';
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-link" href="index.php">Home</a>
-            <a class="nav-link active" aria-current="page" href="add.php">Add</a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
+                <a class="nav-link active" aria-current="page" href="add.php">Add</a>
+            <?php } ?>
         </div>
         </div>
+        <?php if (isset($_SESSION['username'])){ ?>
+            <a class="nav-link" href="process.php?action=logout">Logout</a>
+        <?php } else { ?>
+            <a class="nav-link" href="login.php">Login</a>
+        <?php } ?>
     </div>
     </nav>
+    <?php
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) {
+    ?>
     <div class="container">
         <div class="row mt-5">
             <center>
@@ -64,6 +75,13 @@ include 'db.php';
             </div>
         </div>
     </div>
+    <?php  
+    } else {
+    ?>
+        <center><h1 class="mt-5">You're Not an Admin.</h1></center>
+    <?php
+    }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
