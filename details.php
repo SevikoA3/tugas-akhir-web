@@ -2,7 +2,7 @@
 include "db.php";
 
 $query = "SELECT * FROM hotels WHERE id = ". $_GET['id'];
-$result = mysqli_query($conn, $query);
+$result = mysqli_query($connect, $query);
 $row = mysqli_fetch_array($result);
 
 $name = $row['name'];
@@ -29,7 +29,7 @@ $description = $row['description'];
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link" href="index.php">Home</a>
             <a class="nav-link" href="add.php">Add</a>
         </div>
         </div>
