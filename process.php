@@ -79,4 +79,18 @@ else if (isset($_POST["register"])){
         header("Location: register.php?message=Password does not match");
     }
 }
+else if (isset($_POST['book'])){
+    session_start();
+    if ($_POST['checkin'] > $_POST['checkout']) {
+        header("Location: booking.php?id=". $_POST['id']. "&message=Checkin date must be before checkout date");
+    }
+    else {
+        $query = "INSERT INTO bookings(username, hotelID, checkin, checkout, bookingDate) VALUES ('". $_SESSION['username']. "', '". $_POST['id']. "', '". $_POST['checkin']. "', '". $_POST['checkout']. "', '". date('Y-m-d')."')";
+        if ($result = mysqli_query($connect, $query)) {
+            header("Location: index.php?message=Booking successful, check you booking history for more details.");
+        } else {
+            header("Location: index.php?message=Booking failed.");
+        }
+    }
+}
 ?>

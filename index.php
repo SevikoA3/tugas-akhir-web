@@ -52,11 +52,11 @@ include 'db.php';
                 <div class="card-body">
                     <div style="text-overflow: ellipsis; overflow: hidden; height: 7rem; white-space: nowrap;">
                         <h5 class="card-title"><?= $data['name'] ?></h5>
-                        <p class="card-text m-0">Price per night:</p>
+                        <p class="card-text m-0">Price per day:</p>
                         <p class="card-text">Rp<?= number_format($data['price'], 2, ',', '.') ?></p>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="process.php?bookingHotelID=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Book</a>
+                        <a href="booking.php?id=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Book</a>
                         <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-secondary" style="width: 100px;">Details</a>
                     </div>
                 </div>
