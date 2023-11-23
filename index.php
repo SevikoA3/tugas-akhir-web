@@ -27,12 +27,12 @@ include 'db.php';
                 <a class="nav-link" href="add.php">Add</a>
             <?php } ?>
         </div>
-        </div>
-        <?php if (isset($_SESSION['username'])){ ?>
-            <a class="nav-link" href="process.php?action=logout">Logout</a>
-        <?php } else { ?>
-            <a class="nav-link" href="login.php">Login</a>
-        <?php } ?>
+    </div>
+    <?php if (isset($_SESSION['username'])){ ?>
+        <a class="nav-link" href="process.php?action=logout">Logout from <?= $_SESSION['username'] ?></a>
+    <?php } else { ?>
+        <a class="nav-link" href="login.php">Login</a>
+    <?php } ?>
     </div>
     </nav>
 
@@ -45,7 +45,7 @@ include 'db.php';
         <div class="row">
             
         </div>
-        <div class="row row-cols-auto d-flex justify-content-center mt-5">
+        <div class="row row-cols-auto d-flex justify-content-center mt-3">
             <?php  
             $query = "SELECT * FROM hotels";
             $result = mysqli_query($connect, $query);
@@ -53,8 +53,8 @@ include 'db.php';
             if (mysqli_num_rows($result) > 0) {
                 while($data = mysqli_fetch_assoc($result)) {
             ?>
-                <div class="card" style="width: 18rem; height: 24rem; padding: 0;">
-                <img src="images/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
+                <div class="card m-3" style="width: 18rem; height: 24rem; padding: 0;">
+                <img src="images/hotels/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
                 <div class="card-body">
                     <div style="text-overflow: ellipsis; overflow: hidden; height: 7rem; white-space: nowrap;">
                         <h5 class="card-title"><?= $data['name'] ?></h5>
