@@ -6,6 +6,15 @@ $query = "SELECT * FROM hotels WHERE id = ". $_GET['id'];
 $result = mysqli_query($connect, $query);
 $row = mysqli_fetch_array($result);
 
+$query2 = "SELECT image FROM rooms WHERE hotelID = ". $_GET['id'];
+$result2 = mysqli_query($connect, $query2);
+$row2 = mysqli_fetch_array($result2);
+$query3 = 'SELECT image FROM hotels WHERE id = '. $_GET['id'];
+$result3 = mysqli_query($connect, $query3);
+$row3 = mysqli_fetch_array($result3);
+
+$all_image = array_merge($row3, $row2);
+
 $name = $row['name'];
 $address = $row['address'];
 $image = "images/". $row['image'];
