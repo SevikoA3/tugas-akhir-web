@@ -48,6 +48,19 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
                 <h4>Contact +62123456789 if you have any problem.</h4>
             </center>
         </div>
+        <div class="row">
+            <?php  
+            if (isset($_GET['message'])) {
+            ?> 
+                <center>
+                <div class="alert alert-secondary mx-3 mt-3" role="alert" style="max-width: 700px">
+                    <?= $_GET['message'] ?>
+                </div>
+                </center>
+            <?php  
+            }
+            ?>
+        </div>
         <?php  
         $result = mysqli_query($connect, $query);
         if (isset($_SESSION['role']) && $_SESSION['role'] == 'user' && mysqli_num_rows($result) > 0){

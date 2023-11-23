@@ -43,7 +43,17 @@ include 'db.php';
             </center>
         </div>
         <div class="row">
-            
+            <?php  
+            if (isset($_GET['message'])) {
+            ?> 
+                <center>
+                <div class="alert alert-secondary mx-3 mt-3" role="alert" style="max-width: 700px">
+                    <?= $_GET['message'] ?>
+                </div>
+                </center>
+            <?php  
+            }
+            ?>
         </div>
         <div class="row row-cols-auto d-flex justify-content-center mt-3">
             <?php  

@@ -155,7 +155,7 @@ else if (isset($_POST['book'])){
     else {
         $query = "INSERT INTO bookings(username, hotelID, checkin, checkout, bookingDate, paid) VALUES ('". $_SESSION['username']. "', '". $_POST['id']. "', '". $_POST['checkin']. "', '". $_POST['checkout']. "', '". date('Y-m-d')."', 0)";
         if ($result = mysqli_query($connect, $query)) {
-            header("Location: index.php?message=Booking successful, check you booking history for more details.");
+            header("Location: index.php?message=Booking successful, check your booking history for more details.");
         } else {
             header("Location: index.php?message=Booking failed.");
         }

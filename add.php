@@ -44,6 +44,19 @@ include 'db.php';
                 <h1>Add Hotel Room</h1>
             </center>
         </div>
+        <div class="row">
+            <?php  
+            if (isset($_GET['message'])) {
+            ?> 
+                <center>
+                <div class="alert alert-secondary mx-3 mt-3" role="alert" style="max-width: 700px">
+                    <?= $_GET['message'] ?>
+                </div>
+                </center>
+            <?php  
+            }
+            ?>
+        </div>
         <div class="row my-5 mx-3 d-flex justify-content-center">
             <div class="p-3 mx-3 row shadow-lg rounded border" style="max-width: 700px;">
                 <form action="process.php" method="POST" enctype="multipart/form-data">
