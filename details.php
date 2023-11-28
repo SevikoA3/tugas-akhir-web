@@ -8,13 +8,10 @@ $row = mysqli_fetch_array($result);
 
 $query2 = "SELECT image FROM rooms WHERE hotelID = " . $_GET['id'];
 $result2 = mysqli_query($connect, $query2);
-$row2 = mysqli_fetch_all($result2);
 
 $query3 = 'SELECT image FROM hotels WHERE id = ' . $_GET['id'];
 $result3 = mysqli_query($connect, $query3);
-$row3 = mysqli_fetch_all($result3);
-
-$all_images = array_merge($row2, $row3);
+$hotelImage = mysqli_fetch_assoc($result3);
 
 $name = $row['name'];
 $address = $row['address'];
@@ -61,43 +58,32 @@ $description = $row['description'];
     </nav>
     <center>
     <div class="container mt-5">
-        <div class="card" style="width: 50rem;">
-        <h3 style="padding-bottom: 20px;"><?= $name ?></h3>
-    <div id="carouselExampleIndicators" class="carousel slide">
-        <div class="carousel-indicators">
-            <?php
-            $totalImages = count($all_images);
-            for ($i = 0; $i < $totalImages; $i++) {
-                $activeClass = ($i == 0) ? 'active' : '';
-                echo '<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' . $i . '" class="' . $activeClass . '" aria-label="Slide ' . ($i + 1) . '"></button>';
-            }
-            ?>
-        </div>
-        <div class="carousel-inner">
-            <?php
-            foreach ($all_images as $index => $imageSrc) {
-                $activeClass = ($index == 0) ? 'active' : '';
-                echo '<div class="carousel-item ' . $activeClass . '">';
-                
-                if(isset($imageSrc[0])) {
-                    echo '<img src="' . $imageSrc[0] . '" class="d-block w-50 mx-auto" alt="Image ' . ($index + 1) . '">';
-                } else {
-                    echo '<p>Image not available</p>';
+        <div class="card p-3" style="width: 50rem;">
+        <h3 class="my-3"><?= $name ?></h3>
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active">
+                <img src="images/hotels/<?= $hotelImage['image'] ?>" class="d-block w-100" alt="hotel image" style="aspect-ratio: 16/9; object-fit: cover">
+                </div>
+                <?php  
+                while ($row2 = mysqli_fetch_assoc($result2)){
+                ?>
+                    <div class="carousel-item">
+                    <img src="images/Rooms/<?= $row2['image'] ?>" class="d-block w-100" alt="hotel room" style="aspect-ratio: 16/9; object-fit: cover">
+                    </div>
+                <?php  
                 }
-                
-                echo '</div>';
-            }
-            ?>
+                ?>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%);">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%);">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
             <div class="card-body">
                 <h5 class="card-title"><?= $name ?></h5>
                 <p class="card-text">Address: <?= $address ?></p>
