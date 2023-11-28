@@ -63,13 +63,13 @@ include 'db.php';
             }
             ?>
         </div>
+        <div class="row my-5 mx-3 d-flex justify-content-center">
+        <h3>Upcoming</h3>
         <?php
         $query = "SELECT bookings.username, hotels.name, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE checkin >= CURRENT_DATE()";
         $result = mysqli_query($connect, $query);
         if (mysqli_num_rows($result) > 0){
         ?>
-            <div class="row my-5 mx-3 d-flex justify-content-center">
-                <h3>Upcoming</h3>
                 <div class="p-3 mx-3 row shadow-lg rounded border">
                     <table class="table table-striped">
                         <thead>
@@ -121,6 +121,7 @@ include 'db.php';
                     </table>
                 </div>
             </div>
+        </div>
         <?php
         } else {
         ?>
@@ -130,6 +131,7 @@ include 'db.php';
         <?php  
         }
         ?>
+        </div>
         <div class="row my-5 mx-3 d-flex justify-content-center">
         <h3>Past Booking</h3>
         <?php
@@ -190,6 +192,7 @@ include 'db.php';
         <?php  
         }
         ?>
+        </div>
         <?php  
         }
         ?>
