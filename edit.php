@@ -29,6 +29,7 @@ $row = mysqli_fetch_assoc($result);
             <?php } ?>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
                 <a class="nav-link" href="add.php">Add</a>
+                <a class="nav-link" href="paymentCheck.php">Check Payment</a>
             <?php } ?>
         </div>
         </div>

@@ -27,6 +27,7 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
             <?php } ?>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"){ ?>
                 <a class="nav-link" href="add.php">Add</a>
+                <a class="nav-link" href="paymentCheck.php">Check Payment</a>
             <?php } ?>
         </div>
         </div>
