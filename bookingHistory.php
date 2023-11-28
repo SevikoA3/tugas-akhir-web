@@ -44,7 +44,7 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
             <center>
                 <h1>Booking History</h1>
                 <h4>Transfer to 63482736 (BCA) for payment.</h4>
-                <h4>Our admin will check the payment on the next day.</h4>
+                <h4>Our admin will check the payment.</h4>
                 <h4>Contact +62123456789 if you have any problem.</h4>
             </center>
         </div>
