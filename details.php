@@ -62,8 +62,8 @@ $description = $row['description'];
         <div class="row d-flex justify-content-center m-5">
             <div class="card p-3" style="width: 50rem;">
             <center>
-            <h2 class="mt-3 mb-5"><?= $name ?> <p class="card-text" style="text-align: justify;"></h2>
-            <p class="card-text" style="text-align: justify;"> <i class="fas fa-map-marker-alt"></i> <?= $address ?></p>
+            <h2 class="mt-3 mb-0"><?= $name ?> <p class="card-text" style="text-align: justify;"></h2>
+            <p class="card-text mb-5" style="text-align: justify;"><i class="fas fa-map-marker-alt"></i> <?= $address ?></p>
             </center>
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner rounded">
