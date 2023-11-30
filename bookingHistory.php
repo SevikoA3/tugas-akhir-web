@@ -95,7 +95,7 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal<?= $data['id'] ?>" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -121,7 +121,7 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
                                     <td>Rp<?= number_format($totalPayment, 2, ',', '.') ?></td>
                                     <td><?= $data['paid'] ? "Yes" : "No" ?></td>
                                     <td>
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal<?= $data['id'] ?>">
                                             Cancel
                                     </button>
                                     </td>

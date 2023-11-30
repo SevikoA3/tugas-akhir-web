@@ -1,6 +1,8 @@
 <?php  
 session_start();
 include 'db.php';
+$hotelName = '';
+$hotelId = '';
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -70,7 +72,7 @@ include 'db.php';
             if (mysqli_num_rows($result) > 0) {
                 while($data = mysqli_fetch_assoc($result)) {
             ?>
-                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal fade" id="confirmationModal<?= $data['id'] ?>" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -104,7 +106,7 @@ include 'db.php';
                         } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                         ?>
                         <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-primary mx-1" style="width: 100px;">Edit</a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal<?= $data['id'] ?>">
                             Delete
                         </button>
                         <?php  

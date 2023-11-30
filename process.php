@@ -11,6 +11,7 @@ if (isset($_GET['action'])) {
         $id = $_GET['id'];
         $query = "DELETE FROM bookings WHERE id = '$id'";
         if ($result = mysqli_query($connect, $query)){
+            session_start();
             if ($_SESSION['urlBefore'] == 'paymentCheck')
                 header("Location: paymentCheck.php?message=Booking cancelled");
             else
@@ -26,6 +27,7 @@ if (isset($_GET['action'])) {
         $id = $_GET['id'];
         $query = "UPDATE bookings SET paid = 1 WHERE id = '$id'";
         if ($result = mysqli_query($connect, $query)){
+            session_start();
             if ($_SESSION['urlBefore'] == 'paymentCheck')
                 header("Location: paymentCheck.php?message=Booking paid");
             else
@@ -41,15 +43,32 @@ if (isset($_GET['action'])) {
         $id = $_GET['id'];
         $query = "UPDATE bookings SET paid = 0 WHERE id = '$id'";
         if ($result = mysqli_query($connect, $query)){;
-            header("Location: paymentCheck.php");
+            header("Location: paymentCheck.php?message=Booking unpaid");
         } else {
-            header("Location: paymentCheck.php");
+            header("Location: paymentCheck.php?message=Booking payment failed");
         }
     }
     else if ($_GET['action'] == 'deleteHotel') {
         $id = $_GET['id'];
+
+        $query = "SELECT * FROM hotels WHERE id = '$id'";
+        $result = mysqli_query($connect, $query);
+        $hotel = mysqli_fetch_assoc($result);
+
+        $query2 = "SELECT * FROM rooms WHERE hotelID = '$id'";
+        $result2 = mysqli_query($connect, $query2);
+        $rooms = mysqli_fetch_all($result2, MYSQLI_ASSOC);
+
+        $query3 = "DELETE FROM bookings WHERE hotelID = '$id'";
+        mysqli_query($connect, $query3);
+
         $query = "DELETE FROM hotels WHERE id = '$id'";
-        if ($result = mysqli_query($connect, $query)){;
+        $query2 = "DELETE FROM rooms WHERE hotelID = '$id'";
+        if (mysqli_query($connect, $query) && mysqli_query($connect, $query2)){
+            foreach ($rooms as $room) {
+                unlink('images/Rooms/'.$room['image']);
+            }
+            unlink('images/Hotels/'.$hotel['image']);
             header("Location: index.php?message=Hotel deleted");
         } else {
             header("Location: index.php?message=Hotel deletion failed");
@@ -80,6 +99,13 @@ if (isset($_POST['addHotel'])) {
     $hotelImageSize = $hotelImage['size'];
 
     $hotelRooms = $_FILES['hotelRooms']['name'];
+
+    $query = "SELECT * FROM hotels WHERE name = '$hotelName'";
+    if ($result = mysqli_query($connect, $query)) {
+        if (mysqli_num_rows($result) > 0) {
+            header("location: add.php?message=". $hotelName. " already exists");
+        }
+    }
 
     $query = "INSERT INTO hotels(name, address, price, description) VALUES ('$hotelName', '$hotelAddress', '$hotelPrice', '$hotelDesc')";
     

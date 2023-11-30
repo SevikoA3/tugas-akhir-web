@@ -70,14 +70,14 @@ $_SESSION['urlBefore'] = "paymentCheck";
             ?>
         </div>
         <div class="row">
-        <div class="row my-5 mx-3 d-flex justify-content-center w-100">
+        <div class="row my-5 d-flex justify-content-center w-100">
         <h3>Upcoming</h3>
         <?php
         $query = "SELECT bookings.username, hotels.name, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE checkin >= CURRENT_DATE()";
         $result = mysqli_query($connect, $query);
         if (mysqli_num_rows($result) > 0){
         ?>
-                <div class="p-3 mx-3 row shadow-lg rounded border">
+                <div class="row p-3 shadow-lg rounded border w-100">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -98,7 +98,7 @@ $_SESSION['urlBefore'] = "paymentCheck";
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal<?= $data['id'] ?>" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -135,7 +135,7 @@ $_SESSION['urlBefore'] = "paymentCheck";
                                         <?php  
                                         }
                                         ?>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal<?= $data['id'] ?>">
                                             Cancel
                                         </button>
                                     </td>
@@ -151,20 +151,17 @@ $_SESSION['urlBefore'] = "paymentCheck";
         <?php
         } else {
         ?>
-            <center>
-                <h5 class="p-3 row shadow-lg rounded border">No Data.</h5>
-            </center>
+            <h5 class="p-3">No Data.</h5>
         <?php  
         }
         ?>
-        <div class="row my-5 mx-3 d-flex justify-content-center w-100">
-        <h3>Past Booking</h3>
+        <h3 class="mt-5">Past Booking</h3>
         <?php
         $query = "SELECT bookings.username, hotels.name, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE checkin < CURRENT_DATE()";
         $result = mysqli_query($connect, $query);
         if (mysqli_num_rows($result) > 0){
         ?>
-                <div class="p-3 mx-3 row shadow-lg rounded border">
+                <div class="row p-3 shadow-lg rounded border w-100">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -185,7 +182,7 @@ $_SESSION['urlBefore'] = "paymentCheck";
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal<?= $data['id'] ?>" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -222,7 +219,7 @@ $_SESSION['urlBefore'] = "paymentCheck";
                                         <?php  
                                         }
                                         ?>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal<?= $data['id'] ?>">
                                             Cancel
                                         </button>
                                     </td>
@@ -238,9 +235,7 @@ $_SESSION['urlBefore'] = "paymentCheck";
         <?php
         } else {
         ?>
-            <center>
-                <h5 class="p-3 row shadow-lg rounded border">No Data.</h5>
-            </center>
+            <h5 class="p-3">No Data.</h5>
         <?php  
         }
         ?>
