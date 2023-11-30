@@ -53,11 +53,17 @@ $row = mysqli_fetch_assoc($result);
             <?php  
             if (isset($_GET['message'])) {
             ?> 
-                <center>
-                <div class="alert alert-secondary mx-3 mt-3" role="alert" style="max-width: 700px">
-                    <?= $_GET['message'] ?>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                    <strong class="me-auto">Message</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <?= $_GET['message'] ?>
+                    </div>
                 </div>
-                </center>
+                </div>
             <?php  
             }
             ?>
@@ -105,5 +111,14 @@ $row = mysqli_fetch_assoc($result);
     }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>
+    const message = <?php echo isset($_GET['message']) ? 'true' : 'false'; ?>;
+    const toastLiveExample = document.getElementById('liveToast');
+
+    if (message) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
+    }
+    </script>
 </body>
 </html>
