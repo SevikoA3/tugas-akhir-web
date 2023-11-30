@@ -28,6 +28,7 @@ $description = $row['description'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
@@ -61,7 +62,8 @@ $description = $row['description'];
         <div class="row d-flex justify-content-center m-5">
             <div class="card p-3" style="width: 50rem;">
             <center>
-            <h2 class="mt-3 mb-5"><?= $name ?></h2>
+            <h2 class="mt-3 mb-5"><?= $name ?> <p class="card-text" style="text-align: justify;"></h2>
+            <p class="card-text" style="text-align: justify;"> <i class="fas fa-map-marker-alt"></i> <?= $address ?></p>
             </center>
             <div id="carouselExample" class="carousel slide">
                 <div class="carousel-inner rounded">
@@ -90,8 +92,6 @@ $description = $row['description'];
                 <div class="card mt-3 border-0">
                     <h5>Description</h5>
                     <p class="card-text" style="text-align: justify;"><?= $description ?></p>
-                    <h5>Address</h5>
-                    <p class="card-text" style="text-align: justify;"><?= $address ?></p>
                     <h5>Price (per day)</h5>
                     <p class="card-text">Rp<?= number_format($price, 2, ',', '.') ?></p>
                     <center>
