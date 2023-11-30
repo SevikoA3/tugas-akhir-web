@@ -141,34 +141,34 @@ else if (isset($_POST['editHotel'])) {
     $query = "UPDATE hotels SET name = '$hotelName', address = '$hotelAddress', price = '$hotelPrice', description = '$hotelDesc' WHERE id = '$hotelID'";
     $result = mysqli_query($connect, $query);
 
-    if (isset($_FILES['hotelImage'])) {
-        $id = mysqli_fetch_assoc(mysqli_query($connect,"SELECT id FROM hotels WHERE name = '$hotelName'"));
+    if (isset($_FILES['hotelImage']) && $_FILES['hotelImage']['error'] == 0) {
+        $hotel = mysqli_fetch_assoc(mysqli_query($connect,"SELECT id, image FROM hotels WHERE name = '$hotelName'"));
         $hotelImage = $_FILES['hotelImage'];
         $hotelImageName = $hotelImage['name'];
         $explodeHotelImageName = explode(".", $hotelImageName);
         $hotelImageType = end($explodeHotelImageName);
         $hotelImageTmpName = $hotelImage['tmp_name'];
-        // print_r($hotelImage);
-        print_r($id);
+        unlink("images/Hotels/".$hotel['image']);
 
-        if (move_uploaded_file($hotelImageTmpName, "images/Hotels/". $id['id']. ".$hotelImageType")) {
-            $query = "UPDATE hotels SET image = '". $id['id']. ".$hotelImageType' WHERE id = '$hotelID'";
+        if (move_uploaded_file($hotelImageTmpName, "images/Hotels/". $hotel['id']. ".$hotelImageType")) {
+            $query = "UPDATE hotels SET image = '". $hotel['id']. ".$hotelImageType' WHERE id = '$hotelID'";
             $result = mysqli_query($connect, $query);
         }
     }
 
-    if (isset($_FILES['hotelRooms'])) {
+    if (isset($_FILES['hotelRooms']) && $_FILES['hotelRooms']['error'][0] == 0) {
         $hotelRooms = $_FILES['hotelRooms']['name'];
-
+        $query = 'DELETE FROM rooms WHERE hotelID = '. $hotelID;
+        mysqli_query($connect, $query);
         foreach ($hotelRooms as $key => $room) {
             $tmp_name = $_FILES['hotelRooms']['tmp_name'][$key];
-            if (is_string($room)) {
-                $explodeRoom = explode(".", $room);
-                $roomType = end($explodeRoom);
-                move_uploaded_file($tmp_name, "images/Rooms/". $id['id']. ".". $key. ".". $roomType);
-                $query2 = "UPDATE rooms SET image = '". $id['id'].".$key.$roomType' WHERE hotelID = '$hotelID'";
-                $result2 = mysqli_query($connect, $query2);
-            }
+            $explodeRoom = explode(".", $room);
+            $roomType = end($explodeRoom);
+            $roomFile = $hotelID. ".". $key. ".". $roomType;
+            unlink("images/Rooms/".$roomFile);
+            $query2 = "INSERT INTO rooms(hotelID, image) VALUES ('". $hotelID. "', '". $roomFile. "')";
+            $result2 = mysqli_query($connect, $query2);
+            move_uploaded_file($tmp_name, "images/Rooms/". $roomFile);
         }
     }
 
