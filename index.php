@@ -92,8 +92,8 @@ $hotelId = '';
                 <div class="card m-3" style="width: 18rem; height: 24rem; padding: 0;">
                 <img src="images/hotels/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
                 <div class="card-body">
-                    <div style="text-overflow: ellipsis; overflow: hidden; height: 7rem; white-space: nowrap;">
-                        <h5 class="card-title"><?= $data['name'] ?></h5>
+                    <div style="height: 7rem;">
+                        <h5 class="card-title text-truncate"><?= $data['name'] ?></h5>
                         <p class="card-text m-0">Price per day:</p>
                         <p class="card-text">Rp<?= number_format($data['price'], 2, ',', '.') ?></p>
                     </div>

@@ -57,43 +57,51 @@ $description = $row['description'];
             <?php } ?>
         </div>
     </nav>
-    <center>
-    <div class="container mt-5">
-        <div class="card p-3" style="width: 50rem;">
-        <h3 class="my-3"><?= $name ?></h3>
-        <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner rounded">
-                <div class="carousel-item active">
-                <img src="images/hotels/<?= $hotelImage['image'] ?>" class="d-block w-100" alt="hotel image" style="aspect-ratio: 16/9; object-fit: cover">
-                </div>
-                <?php  
-                while ($row2 = mysqli_fetch_assoc($result2)){
-                ?>
-                    <div class="carousel-item">
-                    <img src="images/Rooms/<?= $row2['image'] ?>" class="d-block w-100" alt="hotel room" style="aspect-ratio: 16/9; object-fit: cover">
+    <div class="container">
+        <div class="row d-flex justify-content-center m-5">
+            <div class="card p-3" style="width: 50rem;">
+            <center>
+            <h2 class="mt-3 mb-5"><?= $name ?></h2>
+            </center>
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active">
+                    <img src="images/hotels/<?= $hotelImage['image'] ?>" class="d-block w-100" alt="hotel image" style="aspect-ratio: 16/9; object-fit: cover">
                     </div>
-                <?php  
-                }
-                ?>
+                    <?php  
+                    while ($row2 = mysqli_fetch_assoc($result2)){
+                    ?>
+                        <div class="carousel-item">
+                        <img src="images/Rooms/<?= $row2['image'] ?>" class="d-block w-100" alt="hotel room" style="aspect-ratio: 16/9; object-fit: cover">
+                        </div>
+                    <?php  
+                    }
+                    ?>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-            <div class="card-body">
-                <h5 class="card-title"><?= $name ?></h5>
-                <p class="card-text">Address: <?= $address ?></p>
-                <p class="card-text">Price per day: Rp<?= number_format($price, 2, ',', '.') ?></p>
-                <p class="card-text"><?= $description ?></p>
+                <div class="card mt-3 border-0">
+                    <h5>Description</h5>
+                    <p class="card-text" style="text-align: justify;"><?= $description ?></p>
+                    <h5>Address</h5>
+                    <p class="card-text" style="text-align: justify;"><?= $address ?></p>
+                    <h5>Price (per day)</h5>
+                    <p class="card-text">Rp<?= number_format($price, 2, ',', '.') ?></p>
+                    <center>
+                        <a href="booking.php?id=<?= $_GET['id'] ?>" class="btn btn-primary mx-1" style="width: 100px;">Book</a>
+                    </center>
+                    <a href="index.php" class="btn"><u>view other hotels</u></a>
+                </div>
             </div>
         </div>
     </div>
-    </center>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
