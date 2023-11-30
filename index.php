@@ -76,15 +76,16 @@ include 'db.php';
                         <?php  
                         if (isset($_SESSION['role']) && $_SESSION['role'] == 'user') {
                         ?>
-                        <a href="booking.php?id=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Book</a>
+                        <a href="booking.php?id=<?= $data['id'] ?>" class="btn btn-primary mx-1" style="width: 100px;">Book</a>
                         <?php  
                         } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                         ?>
-                        <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-primary" style="width: 100px;">Edit</a>
+                        <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-primary mx-1" style="width: 100px;">Edit</a>
+                        <a href="process.php?action=deleteHotel&id=<?= $data['id'] ?>" class="btn btn-danger mx-1" style="width: 100px;">Delete</a>
                         <?php  
                         }
                         ?>
-                        <a href="process.php?detailName=<?= $data['name'] ?>" class="btn btn-secondary" style="width: 100px;">Details</a>
+                        <a href="details.php?id=<?= $data['id'] ?>" class="btn btn-secondary mx-1" style="width: 100px;">Details</a>
                     </div>
                 </div>
                 </div>

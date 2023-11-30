@@ -34,14 +34,24 @@ if (isset($_GET['action'])) {
             header("Location: paymentCheck.php");
         }
     }
-}
-else if (isset($_GET['detailName'])) {
-    $detailName = $_GET['detailName'];
-    $query = "SELECT id FROM hotels WHERE name = '$detailName'";
-    $hotelID = mysqli_fetch_assoc(mysqli_query($connect, $query))['id'];
-
-    //id hotel untuk details
-    header('Location: details.php?id='. $hotelID);
+    else if ($_GET['action'] == 'deleteHotel') {
+        $id = $_GET['id'];
+        $query = "DELETE FROM hotels WHERE id = '$id'";
+        if ($result = mysqli_query($connect, $query)){;
+            header("Location: index.php?message=Hotel deleted");
+        } else {
+            header("Location: index.php?message=Hotel deletion failed");
+        }
+    }
+    else if ($_GET['action'] == 'deleteRoom') {
+        $id = $_GET['id'];
+        $query = "DELETE FROM rooms WHERE id = '$id'";
+        if ($result = mysqli_query($connect, $query)){;
+            header("Location: index.php?message=Room deleted");
+        } else {
+            header("Location: index.php?message=Room deletion failed");
+        }
+    }
 }
 
 if (isset($_POST['addHotel'])) {
