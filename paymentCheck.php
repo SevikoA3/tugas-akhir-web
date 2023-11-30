@@ -1,6 +1,7 @@
 <?php  
 session_start();
 include 'db.php';
+$_SESSION['urlBefore'] = "paymentCheck";
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ include 'db.php';
         </div>
         </div>
         <?php if (isset($_SESSION['username'])){ ?>
-            <a class="nav-link" href="process.php?action=logout">Logout</a>
+            <a class="nav-link" href="process.php?action=logout">Logout from <?= $_SESSION['username'] ?></a>
         <?php } else { ?>
             <a class="nav-link" href="login.php">Login</a>
         <?php } ?>
@@ -68,7 +69,8 @@ include 'db.php';
             }
             ?>
         </div>
-        <div class="row my-5 mx-3 d-flex justify-content-center">
+        <div class="row">
+        <div class="row my-5 mx-3 d-flex justify-content-center w-100">
         <h3>Upcoming</h3>
         <?php
         $query = "SELECT bookings.username, hotels.name, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE checkin >= CURRENT_DATE()";
@@ -96,6 +98,23 @@ include 'db.php';
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirmation</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to cancel booking on <?= $data['name'] ?>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                                 <tr>
                                     <td style="max-width: 10rem"><?= $data['username'] ?></td>
                                     <td><?= $data['name'] ?></td>
@@ -116,7 +135,9 @@ include 'db.php';
                                         <?php  
                                         }
                                         ?>
-                                        <a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                            Cancel
+                                        </button>
                                     </td>
                                 </tr>
                             <?php  
@@ -136,8 +157,7 @@ include 'db.php';
         <?php  
         }
         ?>
-        </div>
-        <div class="row my-5 mx-3 d-flex justify-content-center">
+        <div class="row my-5 mx-3 d-flex justify-content-center w-100">
         <h3>Past Booking</h3>
         <?php
         $query = "SELECT bookings.username, hotels.name, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE checkin < CURRENT_DATE()";
@@ -165,6 +185,23 @@ include 'db.php';
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirmation</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to cancel booking on <?= $data['name'] ?>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                                 <tr>
                                     <td style="max-width: 10rem"><?= $data['username'] ?></td>
                                     <td><?= $data['name'] ?></td>
@@ -175,10 +212,19 @@ include 'db.php';
                                     <td><?= $data['paid'] ? "Yes" : "No" ?></td>
                                     <td>
                                         <?php  
-                                        
+                                            if ($data['paid'] == '1') {
                                         ?>
-                                        <a href="process.php?action=paidBooking&id=<?= $data['id'] ?>" class="btn btn-primary">Paid</a>
-                                        <a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a>
+                                            <a href="process.php?action=unpaidBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Unpaid</a>
+                                        <?php  
+                                        } else {
+                                        ?>
+                                            <a href="process.php?action=paidBooking&id=<?= $data['id'] ?>" class="btn btn-primary">Paid</a>
+                                        <?php  
+                                        }
+                                        ?>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                            Cancel
+                                        </button>
                                     </td>
                                 </tr>
                             <?php  
@@ -188,6 +234,7 @@ include 'db.php';
                     </table>
                 </div>
             </div>
+        </div>
         <?php
         } else {
         ?>
@@ -198,7 +245,7 @@ include 'db.php';
         }
         ?>
         </div>
-        <?php  
+        <?php
         }
         ?>
     </div>

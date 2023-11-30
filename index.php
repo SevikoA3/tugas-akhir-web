@@ -70,6 +70,23 @@ include 'db.php';
             if (mysqli_num_rows($result) > 0) {
                 while($data = mysqli_fetch_assoc($result)) {
             ?>
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirmation</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete <?= $data['name'] ?>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="process.php?action=deleteHotel&id=<?= $data['id'] ?>" class="btn btn-danger mx-1" style="width: 100px;">Delete</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
                 <div class="card m-3" style="width: 18rem; height: 24rem; padding: 0;">
                 <img src="images/hotels/<?= $data['image'] ?>" style="aspect-ratio: 3/2; object-fit: cover;" class="card-img-top" alt="<?= $data['name'] ?>">
                 <div class="card-body">
@@ -87,7 +104,9 @@ include 'db.php';
                         } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                         ?>
                         <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-primary mx-1" style="width: 100px;">Edit</a>
-                        <a href="process.php?action=deleteHotel&id=<?= $data['id'] ?>" class="btn btn-danger mx-1" style="width: 100px;">Delete</a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                            Delete
+                        </button>
                         <?php  
                         }
                         ?>

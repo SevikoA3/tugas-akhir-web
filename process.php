@@ -10,19 +10,31 @@ if (isset($_GET['action'])) {
     else if ($_GET['action'] == 'cancelBooking') {
         $id = $_GET['id'];
         $query = "DELETE FROM bookings WHERE id = '$id'";
-        if ($result = mysqli_query($connect, $query)){;
-            header("Location: bookingHistory.php?message=Booking cancelled");
+        if ($result = mysqli_query($connect, $query)){
+            if ($_SESSION['urlBefore'] == 'paymentCheck')
+                header("Location: paymentCheck.php?message=Booking cancelled");
+            else
+                header("Location: bookingHistory.php?message=Booking cancelled");
         } else {
-            header("Location: bookingHistory.php?message=Booking cancellation failed");
+            if ($_SESSION['urlBefore'] == 'paymentCheck')
+                header("Location: paymentCheck.php?message=Booking cancellation failed");
+            else
+                header("Location: bookingHistory.php?message=Booking cancellation failed");
         }
     }
     else if ($_GET['action'] == 'paidBooking') {
         $id = $_GET['id'];
         $query = "UPDATE bookings SET paid = 1 WHERE id = '$id'";
-        if ($result = mysqli_query($connect, $query)){;
-            header("Location: paymentCheck.php");
+        if ($result = mysqli_query($connect, $query)){
+            if ($_SESSION['urlBefore'] == 'paymentCheck')
+                header("Location: paymentCheck.php?message=Booking paid");
+            else
+                header("Location: bookingHistory.php?message=Booking paid");
         } else {
-            header("Location: paymentCheck.php");
+            if ($_SESSION['urlBefore'] == 'paymentCheck')
+                header("Location: paymentCheck.php?message=Booking payment failed");
+            else
+                header("Location: bookingHistory.php?message=Booking payment failed");
         }
     }
     else if ($_GET['action'] == 'unpaidBooking') {

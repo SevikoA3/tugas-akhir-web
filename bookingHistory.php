@@ -1,6 +1,7 @@
 <?php  
 session_start();
 include 'db.php';
+$_SESSION['urlBefore'] = "bookingHistory";
 $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkout, hotels.price, bookings.paid, bookings.id FROM bookings INNER JOIN hotels ON bookings.hotelID = hotels.id WHERE username = '". $_SESSION['username']. "'";
 ?>
 
@@ -32,7 +33,7 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
         </div>
         </div>
         <?php if (isset($_SESSION['username'])){ ?>
-            <a class="nav-link" href="process.php?action=logout">Logout</a>
+            <a class="nav-link" href="process.php?action=logout">Logout from <?= $_SESSION['username'] ?></a>
         <?php } else { ?>
             <a class="nav-link" href="login.php">Login</a>
         <?php } ?>
@@ -94,6 +95,23 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
                                 $checkin = date('j F Y', strtotime($data['checkin']));
                                 $checkout = date('j F Y', strtotime($data['checkout']));
                             ?>
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="confirmationModalLabel">Confirmation</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to cancel booking on <?= $data['name'] ?>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
                                 <tr>
                                     <td><?= $data['name'] ?></td>
                                     <td style="max-width: 10rem"><?= $data['address'] ?></td>
@@ -102,7 +120,11 @@ $query = "SELECT hotels.name, hotels.address, bookings.checkin, bookings.checkou
                                     <td>Rp<?= number_format($data['price'], 2, ',', '.') ?></td>
                                     <td>Rp<?= number_format($totalPayment, 2, ',', '.') ?></td>
                                     <td><?= $data['paid'] ? "Yes" : "No" ?></td>
-                                    <td><a href="process.php?action=cancelBooking&id=<?= $data['id'] ?>" class="btn btn-danger">Cancel</a></td>
+                                    <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                            Cancel
+                                    </button>
+                                    </td>
                                 </tr>
                             <?php  
                             }

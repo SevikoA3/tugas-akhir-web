@@ -34,7 +34,7 @@ $data = mysqli_fetch_assoc(mysqli_query($connect, $query));
         </div>
         </div>
         <?php if (isset($_SESSION['username'])){ ?>
-            <a class="nav-link" href="process.php?action=logout">Logout</a>
+            <a class="nav-link" href="process.php?action=logout">Logout from <?= $_SESSION['username'] ?></a>
         <?php } else { ?>
             <a class="nav-link" href="login.php">Login</a>
         <?php } ?>
